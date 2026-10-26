@@ -1,0 +1,1009 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Warehouse Management System in Kenya | Gemba Concepts</title>
+<meta name="description" content="Consulting-led warehouse management for Kenyan manufacturers and distributors. We fix the process, deploy the WMS, and stay until the results hold.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+<style>
+/* ---------------------------------------------------------------
+   Gemba brand tokens - sampled from gembaconcepts.com (light theme)
+   --------------------------------------------------------------- */
+:root{
+  --cream:#f8f6f0;
+  --cream-deep:#f4f1ea;
+  --ink:#0a0c0b;
+  --ink-soft:#2c302d;
+  --muted:#5f6562;
+  --muted-light:#8a918d;
+  --green:#1f4e2d;
+  --green-deep:#112a18;
+  --green-mid:#2a6b35;
+  --green-wash:rgba(31,78,45,.06);
+  --green-edge:rgba(31,78,45,.16);
+  --line:rgba(10,12,11,.10);
+  --line-soft:rgba(10,12,11,.06);
+  --placeholder:#e6e4de;
+  --danger:#9b2c2c;
+  --container:1200px;
+  --nav-h:68px;
+  --font-sans:"Geist",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 24px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--font-sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-.025em;line-height:1.1;text-wrap:balance}
+p{margin:0;text-wrap:pretty}
+ul,ol,dl{margin:0;padding:0;list-style:none}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px;border-radius:3px}
+::selection{background:var(--green);color:#fff}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+.shell{width:100%;max-width:var(--container);margin-inline:auto;padding-inline:20px}
+
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}
+.eyebrow::before{content:"";width:18px;height:1px;background:currentColor;opacity:.55}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding-inline:22px;border:0;border-radius:4px;font-family:inherit;font-size:14px;font-weight:600;letter-spacing:-.01em;text-decoration:none;cursor:pointer;transition:background .16s ease,color .16s ease,border-color .16s ease,transform .16s ease}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--green);color:#fff}
+.btn-primary:hover{background:var(--green-deep)}
+.btn-light{background:#fff;color:var(--green-deep)}
+.btn-light:hover{background:var(--cream-deep)}
+.btn[disabled]{opacity:.65;cursor:default}
+
+.ph{display:grid;place-items:center;background:var(--placeholder);border-radius:10px;color:var(--muted);text-align:center;padding:40px 24px}
+.ph b{display:block;font-size:15px;font-weight:600;line-height:1.35;color:var(--ink-soft)}
+.ph span{display:block;margin-top:6px;font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted-light)}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .62s cubic-bezier(.22,1,.36,1),transform .62s cubic-bezier(.22,1,.36,1)}
+.reveal[data-shown="true"]{opacity:1;transform:none}
+
+/* ---------------- header ---------------- */
+.site-header{position:sticky;top:0;z-index:40;padding:12px 12px 0}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:var(--nav-h);border:1px solid var(--line);border-radius:12px;background:rgba(248,246,240,.88);backdrop-filter:blur(12px);transition:box-shadow .2s ease}
+.site-header[data-lifted="true"] .header-inner{box-shadow:0 8px 30px -18px rgba(10,12,11,.45)}
+.wordmark{display:flex;align-items:baseline;gap:8px;text-decoration:none}
+.wordmark b{font-size:19px;font-weight:600;letter-spacing:-.04em;color:var(--green)}
+.wordmark span{display:none;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.22em;color:var(--muted)}
+.nav-links{display:none;align-items:center;gap:32px}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .16s ease}
+.nav-links a:hover{color:var(--ink)}
+.header-right{display:flex;align-items:center;gap:10px}
+.lang-toggle{display:flex;align-items:center;padding:2px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.7)}
+.lang-btn{padding:4px 10px;border:0;border-radius:999px;background:none;font-family:inherit;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);cursor:pointer;transition:background .16s ease,color .16s ease}
+.lang-btn:hover{color:var(--ink)}
+.lang-btn[aria-pressed="true"]{background:var(--green);color:#fff}
+.header-cta{display:none;height:40px}
+.burger{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border:1px solid var(--line);border-radius:6px;background:none;font-size:18px;line-height:1;cursor:pointer}
+.mobile-nav{margin-top:8px;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--cream)}
+.mobile-nav[hidden]{display:none}
+.mobile-nav a{display:block;padding:10px 8px;border-radius:4px;font-size:15px;font-weight:500;color:var(--ink);text-decoration:none}
+.mobile-nav .btn{margin-top:8px;width:100%}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:16px;top:16px;z-index:50;padding:8px 16px;border-radius:4px;background:var(--green);color:#fff;font-size:14px;text-decoration:none}
+
+/* ---------------- hero ---------------- */
+.hero{padding-top:48px;padding-bottom:64px}
+.hero-grid{display:grid;gap:40px;align-items:start}
+.hero h1{margin-top:20px;font-size:38px;line-height:1.04}
+.lead{margin-top:24px;max-width:54ch;font-size:16px;line-height:1.65;color:var(--muted)}
+.hero-cta{margin-top:32px}
+.stats-wrap{margin-top:40px;padding-top:28px;border-top:1px solid var(--line)}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.stats dd{margin:0;font-size:26px;font-weight:600;line-height:1;letter-spacing:-.03em}
+.stats p{margin-top:6px;font-size:11px;font-weight:500;line-height:1.35;text-transform:uppercase;letter-spacing:.11em;color:var(--muted)}
+
+/* ---------------- form ---------------- */
+.form-card{padding:20px;border:1px solid var(--line);border-radius:12px;background:var(--cream-deep)}
+.form-card[hidden]{display:none}
+.form-head{margin-bottom:20px}
+.form-head h2{font-size:20px;line-height:1.2}
+.form-head p{margin-top:6px;font-size:13px;line-height:1.55;color:var(--muted)}
+.field-grid{display:grid;gap:14px}
+.f-label{display:block;margin-bottom:6px;font-size:12px;font-weight:500;color:var(--muted)}
+.field{width:100%;height:48px;padding:0 14px;border:1px solid var(--line);border-radius:4px;background:#fff;font-family:inherit;font-size:15px;color:var(--ink);outline:none;transition:border-color .16s ease}
+.field::placeholder{color:var(--muted-light)}
+.field:focus{border-color:var(--green)}
+.field[aria-invalid="true"]{border-color:var(--danger)}
+textarea.field{height:auto;padding:12px 14px;line-height:1.55;resize:vertical}
+select.field{appearance:none;padding-right:36px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%235f6562' stroke-width='1.5'/></svg>");background-repeat:no-repeat;background-position:right 14px center;background-size:10px}
+.phone-row{display:flex}
+.phone-cc{display:flex;align-items:center;height:48px;padding:0 12px;border:1px solid var(--line);border-right:0;border-radius:4px 0 0 4px;background:#fff;font-size:15px;color:var(--muted)}
+.phone-row .field{border-radius:0 4px 4px 0}
+.err{margin-top:4px;font-size:12px;color:var(--danger)}
+.err[hidden]{display:none}
+.form-card .btn{margin-top:20px;width:100%}
+.privacy{margin-top:12px;text-align:center;font-size:11px;line-height:1.5;color:var(--muted-light)}
+.form-note{margin-top:12px;font-size:13px;color:var(--danger)}
+.form-note[hidden]{display:none}
+.form-success{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-height:380px;padding:32px;border:1px solid var(--green-edge);border-radius:12px;background:var(--green-wash)}
+.form-success[hidden]{display:none}
+.tick{display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin-bottom:16px;border-radius:999px;background:var(--green);color:#fff;font-size:20px}
+.form-success p{font-size:17px;font-weight:600;line-height:1.35}
+
+/* ---------------- section 2 : the WMS ---------------- */
+.wms{padding:80px 0;border-top:1px solid var(--line-soft);background:var(--cream-deep)}
+.wms-grid{display:grid;gap:48px}
+.wms-rail h2{margin-top:20px;font-size:30px;line-height:1.12}
+.wms-rail .lead{max-width:50ch}
+.wms-rail .btn{margin-top:32px}
+.usp-list{display:flex;flex-direction:column;gap:20px}
+.usp-card{display:grid;gap:20px;padding:20px;border:1px solid var(--line);border-radius:12px;background:var(--cream)}
+.usp-no{font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--green)}
+.usp-card h3{margin-top:10px;font-size:19px;line-height:1.3}
+.usp-card p{margin-top:10px;font-size:14.5px;line-height:1.6;color:var(--muted)}
+.usp-card .ph{min-height:132px;order:-1}
+
+/* ---------------- section 3 : proof ---------------- */
+.proof{padding:80px 0}
+.proof h2{margin-top:20px;max-width:20ch;font-size:30px;line-height:1.12}
+.proof .lead{max-width:62ch}
+.client-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:48px}
+.client-tile{display:flex;flex-direction:column;justify-content:center;height:100%;min-height:116px;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--cream-deep);transition:border-color .16s ease}
+.client-tile:hover{border-color:var(--green-edge)}
+.client-tile b{font-size:14.5px;font-weight:600;line-height:1.3}
+.client-tile .sector{margin-top:6px;font-size:11px;line-height:1.3;color:var(--muted)}
+.client-tile .country{margin-top:4px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--green)}
+.footnote{margin-top:24px;font-size:13px;line-height:1.55;color:var(--muted-light)}
+.case-label{margin-top:64px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+.case-grid{display:grid;gap:16px;margin-top:20px}
+.case-card{height:100%;padding:20px;border:1px solid var(--line);border-radius:12px;background:var(--cream-deep)}
+.case-card .kicker{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--green)}
+.case-card .ph{margin-top:16px;min-height:230px}
+
+/* ---------------- section 4 : FAQs ---------------- */
+.faqs{padding:80px 0;border-top:1px solid var(--line-soft);background:var(--cream-deep)}
+.faq-grid{display:grid;gap:40px}
+.faqs h2{margin-top:20px;font-size:30px;line-height:1.12}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-item h3{margin:0}
+.faq-btn{display:flex;width:100%;align-items:flex-start;justify-content:space-between;gap:24px;padding:20px 0;border:0;background:none;font-family:inherit;text-align:left;cursor:pointer}
+.faq-btn .q{font-size:16.5px;font-weight:600;line-height:1.35;letter-spacing:-.01em;color:var(--ink)}
+.faq-btn .sign{flex-shrink:0;margin-top:2px;font-size:20px;line-height:1;color:var(--green);transition:transform .2s ease}
+.faq-btn[aria-expanded="true"] .sign{transform:rotate(45deg)}
+.faq-panel[hidden]{display:none}
+.faq-panel p{max-width:68ch;padding:0 32px 24px 0;font-size:15px;line-height:1.68;color:var(--muted)}
+
+/* ---------------- section 5 : final CTA ---------------- */
+.final{padding:16px 0 56px}
+.final .eyebrow{margin-bottom:20px}
+.cta-block{padding:28px;border-radius:16px;background:linear-gradient(135deg,var(--green-deep) 0%,var(--green) 52%,var(--green-mid) 100%)}
+.cta-top{display:grid;gap:40px;align-items:start}
+.cta-top h3{max-width:18ch;font-size:28px;line-height:1.14;color:#fff}
+.cta-top p{margin-top:20px;max-width:56ch;font-size:15.5px;line-height:1.65;color:rgba(255,255,255,.8)}
+.cta-top .btn{margin-top:32px}
+.qr-plate{flex-shrink:0;margin:0}
+.qr-box{display:grid;place-items:center;width:132px;height:132px;border-radius:8px;background:rgba(255,255,255,.95);font-size:13px;font-weight:600;letter-spacing:.1em;color:var(--green-deep)}
+.qr-plate figcaption{margin-top:10px;max-width:150px;font-size:11px;line-height:1.35;color:rgba(255,255,255,.65)}
+.cta-bottom{margin-top:48px;padding-top:36px;border-top:1px solid rgba(255,255,255,.15);display:grid;gap:32px}
+.about-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.55)}
+.about-text{margin-top:12px;font-size:14.5px;line-height:1.62;color:rgba(255,255,255,.8)}
+.about-tag{margin-top:12px;font-size:13px;font-weight:600;color:rgba(255,255,255,.9)}
+.stats-light dd{color:#fff}
+.stats-light p{color:rgba(255,255,255,.7)}
+
+/* ---------------- footer ---------------- */
+.site-footer{padding:0 12px 12px}
+.footer-inner{padding:40px 24px;border:1px solid var(--line);border-radius:12px;background:var(--cream-deep)}
+.footer-grid{display:grid;gap:36px}
+.footer-brand p{margin-top:12px;max-width:32ch;font-size:13px;line-height:1.55;color:var(--muted)}
+.footer-head{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.13em;color:var(--muted-light)}
+.footer-list{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.footer-list a,.footer-list li{font-size:13.5px;color:var(--ink-soft);text-decoration:none;transition:color .16s ease}
+.footer-list a:hover{color:var(--green)}
+.copyright{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-size:12px;color:var(--muted-light)}
+
+/* ---------------- breakpoints ---------------- */
+@media (min-width:640px){
+  .wordmark span{display:inline}
+  .header-cta{display:inline-flex}
+  .hero{padding-top:64px}
+  .hero h1{font-size:48px}
+  .stats{grid-template-columns:repeat(4,1fr);gap:0 24px}
+  .stats div + div{padding-left:24px;border-left:1px solid var(--line)}
+  .stats-light div + div{border-left-color:rgba(255,255,255,.2)}
+  .form-card{padding:28px}
+  .field-grid{grid-template-columns:1fr 1fr}
+  .field-grid .span-2{grid-column:span 2}
+  .usp-card{grid-template-columns:1fr 168px;align-items:center;padding:24px}
+  .usp-card .ph{order:0}
+  .case-grid{grid-template-columns:1fr 1fr}
+  .wms-rail h2,.proof h2,.faqs h2{font-size:36px}
+  .cta-block{padding:40px}
+  .cta-top h3{font-size:36px}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .footer-inner{padding-inline:32px}
+}
+@media (min-width:768px){
+  .shell{padding-inline:32px}
+  .nav-links{display:flex}
+  .burger{display:none}
+  .mobile-nav{display:none!important}
+}
+@media (min-width:1024px){
+  .hero{padding-top:80px;padding-bottom:96px}
+  .hero-grid{grid-template-columns:1fr minmax(420px,46%);gap:56px}
+  .hero h1{font-size:56px}
+  .lead{font-size:17px}
+  .wms,.proof,.faqs{padding:112px 0}
+  .wms-grid{grid-template-columns:minmax(0,42%) 1fr;gap:64px}
+  .wms-rail{position:sticky;top:calc(var(--nav-h) + 48px);align-self:start}
+  .client-grid{grid-template-columns:repeat(4,1fr);gap:16px}
+  .faq-grid{grid-template-columns:minmax(0,32%) 1fr;gap:64px}
+  .cta-block{padding:56px}
+  .cta-top{grid-template-columns:1fr auto;gap:64px}
+  .cta-bottom{grid-template-columns:minmax(0,52%) 1fr;gap:56px}
+  .cta-bottom .stats-wrap{margin-top:0;padding-top:28px;border-top:0}
+  .footer-grid{grid-template-columns:minmax(0,34%) 1fr 1fr 1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main" data-i18n="nav.skip">Skip to content</a>
+
+<header class="site-header" id="top">
+  <div class="shell header-inner">
+    <a class="wordmark" href="#top" aria-label="Gemba Concepts">
+      <b>gemba</b><span>Concepts</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#wms" data-i18n="nav.wms">The WMS</a>
+      <a href="#proof" data-i18n="nav.proof">Proof</a>
+      <a href="#faqs" data-i18n="nav.faqs">FAQs</a>
+    </nav>
+
+    <div class="header-right">
+      <div class="lang-toggle" role="group" data-i18n-aria="nav.langLabel" aria-label="Language">
+        <button class="lang-btn" type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button class="lang-btn" type="button" data-lang="sw" aria-pressed="false">SW</button>
+      </div>
+      <a class="btn btn-primary header-cta" href="#book" data-i18n="nav.cta">Book an assessment</a>
+      <button class="burger" type="button" id="burger" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menu">&#9776;</button>
+    </div>
+  </div>
+
+  <div class="shell mobile-nav" id="mobile-nav" hidden>
+    <nav aria-label="Mobile">
+      <a href="#wms" data-i18n="nav.wms">The WMS</a>
+      <a href="#proof" data-i18n="nav.proof">Proof</a>
+      <a href="#faqs" data-i18n="nav.faqs">FAQs</a>
+      <a class="btn btn-primary" href="#book" data-i18n="nav.cta">Book an assessment</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="shell hero" id="book">
+    <div class="hero-grid">
+      <div class="reveal">
+        <p class="eyebrow" data-i18n="hero.eyebrow">Warehouse Management &middot; Kenya</p>
+        <h1 data-i18n="hero.h1">Warehouse Management Systems, Kenya</h1>
+        <p class="lead" data-i18n="hero.sub">Stock you can trust, picking that keeps pace, and dispatch that leaves on time. Gemba brings industrial expertise, a proven warehouse management system and hands-on implementation to manufacturers and distributors across Kenya.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#wms" data-i18n="hero.cta">Book a free warehouse assessment</a>
+        </div>
+        <div class="stats-wrap">
+          <dl class="stats">
+            <div><dt class="sr-only" data-i18n="stat.clients">Clients served</dt><dd>500+</dd><p data-i18n="stat.clients">Clients served</p></div>
+            <div><dt class="sr-only" data-i18n="stat.years">Years of execution</dt><dd>12+</dd><p data-i18n="stat.years">Years of execution</p></div>
+            <div><dt class="sr-only" data-i18n="stat.sectors">Sectors covered</dt><dd>40+</dd><p data-i18n="stat.sectors">Sectors covered</p></div>
+            <div><dt class="sr-only" data-i18n="stat.accuracy">Inventory accuracy</dt><dd>99%+</dd><p data-i18n="stat.accuracy">Inventory accuracy</p></div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="reveal" data-delay="90">
+        <form class="form-card" id="contact-form" novalidate>
+          <div class="form-head">
+            <h2 data-i18n="form.heading">Book your free warehouse assessment</h2>
+            <p data-i18n="form.sub">Tell us what is slowing the warehouse down. Our Kenya team replies within one working day.</p>
+          </div>
+
+          <div class="field-grid">
+            <div class="span-2">
+              <label class="f-label" for="f-website" data-i18n="form.website">Website</label>
+              <input class="field" id="f-website" name="website" type="text" inputmode="url" autocomplete="url" placeholder="example.co.ke">
+            </div>
+
+            <div>
+              <label class="f-label" for="f-name" data-i18n="form.name">Full name</label>
+              <input class="field" id="f-name" name="name" autocomplete="name">
+              <p class="err" data-err="name" hidden></p>
+            </div>
+
+            <div>
+              <label class="f-label" for="f-email" data-i18n="form.email">Work email</label>
+              <input class="field" id="f-email" name="email" type="email" autocomplete="email">
+              <p class="err" data-err="email" hidden></p>
+            </div>
+
+            <div>
+              <label class="f-label" for="f-company" data-i18n="form.company">Company</label>
+              <input class="field" id="f-company" name="company" autocomplete="organization">
+              <p class="err" data-err="company" hidden></p>
+            </div>
+
+            <div>
+              <label class="f-label" for="f-designation" data-i18n="form.designation">Designation</label>
+              <input class="field" id="f-designation" name="designation" autocomplete="organization-title">
+            </div>
+
+            <div>
+              <label class="f-label" for="f-phone" data-i18n="form.phone">Phone number</label>
+              <div class="phone-row">
+                <span class="phone-cc" aria-hidden="true">+254</span>
+                <input class="field" id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" aria-describedby="phone-cc-note">
+              </div>
+              <span class="sr-only" id="phone-cc-note">Kenya country code +254</span>
+              <p class="err" data-err="phone" hidden></p>
+            </div>
+
+            <div>
+              <label class="f-label" for="f-size" data-i18n="form.size">Company size</label>
+              <select class="field" id="f-size" name="companySize">
+                <option value="" disabled selected data-i18n="form.sizePlaceholder">Select company size</option>
+                <option data-i18n="form.size1">1&ndash;50 employees</option>
+                <option data-i18n="form.size2">51&ndash;200 employees</option>
+                <option data-i18n="form.size3">201&ndash;500 employees</option>
+                <option data-i18n="form.size4">501&ndash;1,000 employees</option>
+                <option data-i18n="form.size5">1,000+ employees</option>
+              </select>
+            </div>
+
+            <div class="span-2">
+              <label class="f-label" for="f-message" data-i18n="form.message">Message / problem statement</label>
+              <textarea class="field" id="f-message" name="message" rows="3"></textarea>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" type="submit" id="submit-btn" data-i18n="form.submit">Get a free warehouse consultation</button>
+          <p class="form-note" id="form-error" role="alert" hidden></p>
+          <p class="privacy" data-i18n="form.privacy">We use your details only to respond to this enquiry.</p>
+        </form>
+
+        <div class="form-success" id="form-success" role="status" hidden>
+          <span class="tick" aria-hidden="true">&#10003;</span>
+          <p data-i18n="form.success">Thank you. Your request has reached our Kenya team, and we will be in touch within one working day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 2 : THE WMS ===================== -->
+  <section class="wms" id="wms">
+    <div class="shell wms-grid">
+      <div class="wms-rail">
+        <div class="reveal">
+          <p class="eyebrow" data-i18n="wms.eyebrow">The Gemba WMS</p>
+          <h2 data-i18n="wms.h2">Consulting-led WMS, built for how Kenyan warehouses actually run.</h2>
+          <p class="lead" data-i18n="wms.sub">Most warehouse systems fail because the software arrives before the process is ready. We walk the floor first, fix what is actually broken, then deploy a system your team can run from day one &mdash; and we stay until it holds.</p>
+          <a class="btn btn-primary" href="#book" data-i18n="wms.cta">Get interactive WMS access</a>
+        </div>
+      </div>
+
+      <ol class="usp-list">
+        <li>
+          <div class="reveal">
+            <article class="usp-card">
+              <div>
+                <span class="usp-no">01</span>
+                <h3 data-i18n="usp1.title">Built on the floor, not in a demo room</h3>
+                <p data-i18n="usp1.body">Every module follows a real warehouse flow: gate entry, ASN unloading, quality check, put-away, replenishment, picking, dispatch and returns. Your team recognises the screens because they match the work.</p>
+              </div>
+              <div class="ph" role="img" aria-label="Image placeholder"><div><b data-i18n="ph.image">Image</b><span data-i18n="ph.supplied">To be supplied</span></div></div>
+            </article>
+          </div>
+        </li>
+        <li>
+          <div class="reveal" data-delay="60">
+            <article class="usp-card">
+              <div>
+                <span class="usp-no">02</span>
+                <h3 data-i18n="usp2.title">Inventory you can finally trust</h3>
+                <p data-i18n="usp2.body">Every pallet, shelf, batch and grade tracked to an exact location, with cycle counts and stock checks built into the daily routine instead of bolted on at year end.</p>
+              </div>
+              <div class="ph" role="img" aria-label="Image placeholder"><div><b data-i18n="ph.image">Image</b><span data-i18n="ph.supplied">To be supplied</span></div></div>
+            </article>
+          </div>
+        </li>
+        <li>
+          <div class="reveal" data-delay="120">
+            <article class="usp-card">
+              <div>
+                <span class="usp-no">03</span>
+                <h3 data-i18n="usp3.title">Runs on the devices your team already carries</h3>
+                <p data-i18n="usp3.body">Rugged scanners, handhelds, or any Android phone. Operators keep working through power and network interruptions, and the floor syncs the moment connectivity returns.</p>
+              </div>
+              <div class="ph" role="img" aria-label="Image placeholder"><div><b data-i18n="ph.image">Image</b><span data-i18n="ph.supplied">To be supplied</span></div></div>
+            </article>
+          </div>
+        </li>
+        <li>
+          <div class="reveal" data-delay="180">
+            <article class="usp-card">
+              <div>
+                <span class="usp-no">04</span>
+                <h3 data-i18n="usp4.title">Made for how goods actually move here</h3>
+                <p data-i18n="usp4.body">Multi-warehouse and inter-branch transfers, batch and expiry traceability, grade and code movement, and a complete document trail for audits and cross-border consignments.</p>
+              </div>
+              <div class="ph" role="img" aria-label="Image placeholder"><div><b data-i18n="ph.image">Image</b><span data-i18n="ph.supplied">To be supplied</span></div></div>
+            </article>
+          </div>
+        </li>
+        <li>
+          <div class="reveal" data-delay="240">
+            <article class="usp-card">
+              <div>
+                <span class="usp-no">05</span>
+                <h3 data-i18n="usp5.title">Connects to the ERP you already run</h3>
+                <p data-i18n="usp5.body">Purchase orders and ASNs in, goods issue and invoices out, with an integration monitor that shows every message that passed or failed &mdash; no silent gaps between the floor and finance.</p>
+              </div>
+              <div class="ph" role="img" aria-label="Image placeholder"><div><b data-i18n="ph.image">Image</b><span data-i18n="ph.supplied">To be supplied</span></div></div>
+            </article>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 3 : INDUSTRY PROOF ===================== -->
+  <section class="proof" id="proof">
+    <div class="shell">
+      <div class="reveal">
+        <p class="eyebrow" data-i18n="proof.eyebrow">Industry proof</p>
+        <h2 data-i18n="proof.h2">Operators who have already done this.</h2>
+        <p class="lead" data-i18n="proof.sub">Manufacturers, processors and distributors across Kenya, East Africa and three continents have brought us in to fix what was not working, and kept us on for the next problem.</p>
+      </div>
+
+      <h3 class="sr-only" data-i18n="proof.clientsLabel">Trusted by</h3>
+      <ul class="client-grid">
+        <li><div class="reveal"><div class="client-tile"><b>Spice World Limited</b><p class="sector" data-i18n="c1.sector">Food &amp; Spice Processing</p><p class="country" data-i18n="c1.country">Kenya</p></div></div></li>
+        <li><div class="reveal" data-delay="50"><div class="client-tile"><b>Dentex Industries Limited</b><p class="sector" data-i18n="c2.sector">Plastic Manufacturing</p><p class="country" data-i18n="c2.country">Kenya</p></div></div></li>
+        <li><div class="reveal" data-delay="100"><div class="client-tile"><b>Pyramid Packaging Ltd</b><p class="sector" data-i18n="c3.sector">Packaging</p><p class="country" data-i18n="c3.country">Africa</p></div></div></li>
+        <li><div class="reveal" data-delay="150"><div class="client-tile"><b>RSB Retail India Ltd</b><p class="sector" data-i18n="c4.sector">Retail &amp; Supply Chain</p><p class="country" data-i18n="c4.country">India</p></div></div></li>
+        <li><div class="reveal"><div class="client-tile"><b>Veedol Corporation Limited</b><p class="sector" data-i18n="c5.sector">Lubricants &amp; Automotive</p><p class="country" data-i18n="c5.country">India</p></div></div></li>
+        <li><div class="reveal" data-delay="50"><div class="client-tile"><b>Swiss Parenterals / Eris Lifesciences</b><p class="sector" data-i18n="c6.sector">Pharmaceutical Manufacturing</p><p class="country" data-i18n="c6.country">India</p></div></div></li>
+        <li><div class="reveal" data-delay="100"><div class="client-tile"><b>Mahalakshmi Profiles Pvt Ltd</b><p class="sector" data-i18n="c7.sector">Steel &amp; Tubes Manufacturing</p><p class="country" data-i18n="c7.country">India</p></div></div></li>
+        <li><div class="reveal" data-delay="150"><div class="client-tile"><b>Emirates Polystyrene Industries</b><p class="sector" data-i18n="c8.sector">Polystyrene &amp; Packaging</p><p class="country" data-i18n="c8.country">UAE</p></div></div></li>
+      </ul>
+
+      <p class="footnote" data-i18n="proof.footnote">Trusted across 40+ sectors in Kenya, East Africa, India, the Middle East and South East Asia.</p>
+
+      <h3 class="case-label" data-i18n="proof.caseStudiesLabel">Case studies</h3>
+      <div class="case-grid">
+        <div class="reveal">
+          <article class="case-card">
+            <p class="kicker" data-i18n="case1.label">Case study &middot; Read</p>
+            <div class="ph" role="img" aria-label="Case study placeholder"><div><b data-i18n="case1.title">Case Study &mdash; View Option</b><span data-i18n="case1.note">Written case study to be supplied</span></div></div>
+          </article>
+        </div>
+        <div class="reveal" data-delay="70">
+          <article class="case-card">
+            <p class="kicker" data-i18n="case2.label">Case study &middot; Watch</p>
+            <div class="ph" role="img" aria-label="Case study placeholder"><div><b data-i18n="case2.title">Case Study &mdash; Video Option</b><span data-i18n="case2.note">Video case study to be supplied</span></div></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 4 : FAQs ===================== -->
+  <section class="faqs" id="faqs">
+    <div class="shell faq-grid">
+      <div class="reveal">
+        <p class="eyebrow" data-i18n="faqs.eyebrow">Questions</p>
+        <h2 data-i18n="faqs.h2">FAQs</h2>
+      </div>
+
+      <ul class="faq-list">
+        <li class="faq-item">
+          <h3><button class="faq-btn" type="button" id="faq-button-0" aria-expanded="true" aria-controls="faq-panel-0"><span class="q" data-i18n="faq1.q">Do you actually work in Kenya, or only from India?</span><span class="sign" aria-hidden="true">+</span></button></h3>
+          <div class="faq-panel" id="faq-panel-0" role="region" aria-labelledby="faq-button-0"><p data-i18n="faq1.a">We work on the floor in Kenya. Our clients here include Spice World Limited and Dentex Industries Limited, and we have run engagements across East Africa and the wider African market. Implementation is on-site with your team: the assessment, the rollout and the training all happen in your warehouse, not over email.</p></div>
+        </li>
+        <li class="faq-item">
+          <h3><button class="faq-btn" type="button" id="faq-button-1" aria-expanded="false" aria-controls="faq-panel-1"><span class="q" data-i18n="faq2.q">We already have an ERP. Do we really need a separate WMS?</span><span class="sign" aria-hidden="true">+</span></button></h3>
+          <div class="faq-panel" id="faq-panel-1" role="region" aria-labelledby="faq-button-1" hidden><p data-i18n="faq2.a">An ERP records what the warehouse reports. A WMS controls what the warehouse does. The gap between the two is where accuracy is lost: stock that exists on the system but cannot be found, picking confirmed before it happened, dispatch documented after the truck has left. Our WMS sits underneath your ERP, feeds it accurate movements, and shows you every message that passed between them.</p></div>
+        </li>
+        <li class="faq-item">
+          <h3><button class="faq-btn" type="button" id="faq-button-2" aria-expanded="false" aria-controls="faq-panel-2"><span class="q" data-i18n="faq3.q">How long does an implementation take?</span><span class="sign" aria-hidden="true">+</span></button></h3>
+          <div class="faq-panel" id="faq-panel-2" role="region" aria-labelledby="faq-button-2" hidden><p data-i18n="faq3.a">The assessment is a 2 to 4 day on-site study. From there, scope is defined from your data rather than a template, and a signed performance baseline is agreed before anything is built. Most warehouse engagements show measurable results within four to six months, with the solution validated on your floor before full rollout.</p></div>
+        </li>
+        <li class="faq-item">
+          <h3><button class="faq-btn" type="button" id="faq-button-3" aria-expanded="false" aria-controls="faq-panel-3"><span class="q" data-i18n="faq4.q">Our operators are not very technical. Will they use it?</span><span class="sign" aria-hidden="true">+</span></button></h3>
+          <div class="faq-panel" id="faq-panel-3" role="region" aria-labelledby="faq-button-3" hidden><p data-i18n="faq4.a">That is the design constraint, not an afterthought. Screens follow the physical task, scanning replaces typing wherever possible, and training happens at the Gemba: in real conditions, under real pressure, with your own supervisors leading it. If the floor cannot run it without us standing there, it is not finished.</p></div>
+        </li>
+        <li class="faq-item">
+          <h3><button class="faq-btn" type="button" id="faq-button-4" aria-expanded="false" aria-controls="faq-panel-4"><span class="q" data-i18n="faq5.q">What happens after go-live?</span><span class="sign" aria-hidden="true">+</span></button></h3>
+          <div class="faq-panel" id="faq-panel-4" role="region" aria-labelledby="faq-button-4" hidden><p data-i18n="faq5.a">We build the review rhythms and audit structures into your team before we step back, and hand over ownership deliberately. We do not exit on a deadline. We exit when the results hold without us.</p></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 5 : FINAL CTA ===================== -->
+  <section class="final">
+    <div class="shell">
+      <div class="reveal">
+        <p class="eyebrow" data-i18n="final.eyebrow">Get started</p>
+
+        <div class="cta-block">
+          <div class="cta-top">
+            <div>
+              <h3 data-i18n="final.h3">Ready to see your warehouse running on a system?</h3>
+              <p data-i18n="final.sub">Every day of unreliable stock, slow picking and delayed dispatch is margin leaving the business. Start with a free on-site assessment and a clear view of what it is costing you.</p>
+              <a class="btn btn-light" href="#book" data-i18n="final.cta">Book a free warehouse assessment</a>
+            </div>
+
+            <figure class="qr-plate">
+              <div class="qr-box" role="img" aria-label="QR code placeholder">QR</div>
+              <figcaption data-i18n="final.qrCaption">Scan to talk to our Kenya team</figcaption>
+            </figure>
+          </div>
+
+          <div class="cta-bottom">
+            <div>
+              <p class="about-label" data-i18n="final.aboutLabel">About Gemba</p>
+              <p class="about-text" data-i18n="final.about">Gemba helps manufacturers build better-performing operations by bringing together industrial expertise, technology and hands-on implementation &mdash; from improving processes to deploying warehouse management systems.</p>
+              <p class="about-tag" data-i18n="final.tagline">Consulting-led technological solutions</p>
+            </div>
+
+            <div class="stats-wrap">
+              <dl class="stats stats-light">
+                <div><dt class="sr-only" data-i18n="fstat.clients">Clients served</dt><dd>500+</dd><p data-i18n="fstat.clients">Clients served</p></div>
+                <div><dt class="sr-only" data-i18n="fstat.team">Team members</dt><dd>300+</dd><p data-i18n="fstat.team">Team members</p></div>
+                <div><dt class="sr-only" data-i18n="fstat.sectors">Sectors covered</dt><dd>40+</dd><p data-i18n="fstat.sectors">Sectors covered</p></div>
+                <div><dt class="sr-only" data-i18n="fstat.continents">Continents</dt><dd>3</dd><p data-i18n="fstat.continents">Continents</p></div>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="wordmark"><b>gemba</b><span style="display:inline">Concepts</span></div>
+        <p data-i18n="footer.tagline">Consulting-led technological solutions for industry.</p>
+      </div>
+
+      <nav aria-label="Footer">
+        <p class="footer-head" data-i18n="footer.linksLabel">Explore</p>
+        <ul class="footer-list">
+          <li><a href="#wms" data-i18n="footer.l1">The WMS</a></li>
+          <li><a href="#proof" data-i18n="footer.l2">Industry proof</a></li>
+          <li><a href="#faqs" data-i18n="footer.l3">FAQs</a></li>
+          <li><a href="#book" data-i18n="footer.l4">Book an assessment</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <p class="footer-head" data-i18n="footer.regionsLabel">Regions we serve</p>
+        <ul class="footer-list">
+          <li data-i18n="footer.r1">Kenya &amp; East Africa</li>
+          <li data-i18n="footer.r2">India</li>
+          <li data-i18n="footer.r3">Middle East</li>
+          <li data-i18n="footer.r4">South East Asia</li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-head" data-i18n="footer.contactLabel">Talk to us</p>
+        <ul class="footer-list">
+          <li><a href="mailto:connect@gembaconcepts.com" data-i18n="footer.email">Email us</a></li>
+          <li><a href="#book" data-i18n="footer.whatsapp">WhatsApp us</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="copyright">&copy; 2026 <span data-i18n="footer.rights">Gemba Concepts. All rights reserved.</span></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* Set this to the CRM / mail relay / webhook that should receive enquiries.
+     Left empty, the form validates and shows the success state without
+     sending anything, so nothing is silently lost in a demo. */
+  var FORM_ENDPOINT = "";
+
+  /* ---------------- copy ----------------
+     English is already in the markup, so the page reads correctly with
+     JavaScript disabled. These dictionaries drive the EN/SW toggle.
+
+     NOTE: the Kiswahili is a working draft. Have a native business
+     speaker review it before launch. */
+  var COPY = {
+    en: {
+      "meta.title": "Warehouse Management System in Kenya | Gemba Concepts",
+      "nav.skip": "Skip to content", "nav.wms": "The WMS", "nav.proof": "Proof",
+      "nav.faqs": "FAQs", "nav.cta": "Book an assessment", "nav.langLabel": "Language",
+      "hero.eyebrow": "Warehouse Management · Kenya",
+      "hero.h1": "Warehouse Management Systems, Kenya",
+      "hero.sub": "Stock you can trust, picking that keeps pace, and dispatch that leaves on time. Gemba brings industrial expertise, a proven warehouse management system and hands-on implementation to manufacturers and distributors across Kenya.",
+      "hero.cta": "Book a free warehouse assessment",
+      "stat.clients": "Clients served", "stat.years": "Years of execution",
+      "stat.sectors": "Sectors covered", "stat.accuracy": "Inventory accuracy",
+      "form.heading": "Book your free warehouse assessment",
+      "form.sub": "Tell us what is slowing the warehouse down. Our Kenya team replies within one working day.",
+      "form.website": "Website", "form.name": "Full name", "form.email": "Work email",
+      "form.company": "Company", "form.designation": "Designation", "form.phone": "Phone number",
+      "form.size": "Company size", "form.message": "Message / problem statement",
+      "form.sizePlaceholder": "Select company size",
+      "form.size1": "1–50 employees", "form.size2": "51–200 employees",
+      "form.size3": "201–500 employees", "form.size4": "501–1,000 employees",
+      "form.size5": "1,000+ employees",
+      "form.submit": "Get a free warehouse consultation", "form.submitting": "Sending…",
+      "form.success": "Thank you. Your request has reached our Kenya team, and we will be in touch within one working day.",
+      "form.error": "Something went wrong. Please try again, or email us directly.",
+      "form.required": "Required", "form.invalidEmail": "Enter a valid work email address",
+      "form.privacy": "We use your details only to respond to this enquiry.",
+      "ph.image": "Image", "ph.supplied": "To be supplied",
+      "wms.eyebrow": "The Gemba WMS",
+      "wms.h2": "Consulting-led WMS, built for how Kenyan warehouses actually run.",
+      "wms.sub": "Most warehouse systems fail because the software arrives before the process is ready. We walk the floor first, fix what is actually broken, then deploy a system your team can run from day one — and we stay until it holds.",
+      "wms.cta": "Get interactive WMS access",
+      "usp1.title": "Built on the floor, not in a demo room",
+      "usp1.body": "Every module follows a real warehouse flow: gate entry, ASN unloading, quality check, put-away, replenishment, picking, dispatch and returns. Your team recognises the screens because they match the work.",
+      "usp2.title": "Inventory you can finally trust",
+      "usp2.body": "Every pallet, shelf, batch and grade tracked to an exact location, with cycle counts and stock checks built into the daily routine instead of bolted on at year end.",
+      "usp3.title": "Runs on the devices your team already carries",
+      "usp3.body": "Rugged scanners, handhelds, or any Android phone. Operators keep working through power and network interruptions, and the floor syncs the moment connectivity returns.",
+      "usp4.title": "Made for how goods actually move here",
+      "usp4.body": "Multi-warehouse and inter-branch transfers, batch and expiry traceability, grade and code movement, and a complete document trail for audits and cross-border consignments.",
+      "usp5.title": "Connects to the ERP you already run",
+      "usp5.body": "Purchase orders and ASNs in, goods issue and invoices out, with an integration monitor that shows every message that passed or failed — no silent gaps between the floor and finance.",
+      "proof.eyebrow": "Industry proof", "proof.h2": "Operators who have already done this.",
+      "proof.sub": "Manufacturers, processors and distributors across Kenya, East Africa and three continents have brought us in to fix what was not working, and kept us on for the next problem.",
+      "proof.clientsLabel": "Trusted by", "proof.caseStudiesLabel": "Case studies",
+      "proof.footnote": "Trusted across 40+ sectors in Kenya, East Africa, India, the Middle East and South East Asia.",
+      "c1.sector": "Food & Spice Processing", "c1.country": "Kenya",
+      "c2.sector": "Plastic Manufacturing", "c2.country": "Kenya",
+      "c3.sector": "Packaging", "c3.country": "Africa",
+      "c4.sector": "Retail & Supply Chain", "c4.country": "India",
+      "c5.sector": "Lubricants & Automotive", "c5.country": "India",
+      "c6.sector": "Pharmaceutical Manufacturing", "c6.country": "India",
+      "c7.sector": "Steel & Tubes Manufacturing", "c7.country": "India",
+      "c8.sector": "Polystyrene & Packaging", "c8.country": "UAE",
+      "case1.label": "Case study · Read", "case1.title": "Case Study — View Option",
+      "case1.note": "Written case study to be supplied",
+      "case2.label": "Case study · Watch", "case2.title": "Case Study — Video Option",
+      "case2.note": "Video case study to be supplied",
+      "faqs.eyebrow": "Questions", "faqs.h2": "FAQs",
+      "faq1.q": "Do you actually work in Kenya, or only from India?",
+      "faq1.a": "We work on the floor in Kenya. Our clients here include Spice World Limited and Dentex Industries Limited, and we have run engagements across East Africa and the wider African market. Implementation is on-site with your team: the assessment, the rollout and the training all happen in your warehouse, not over email.",
+      "faq2.q": "We already have an ERP. Do we really need a separate WMS?",
+      "faq2.a": "An ERP records what the warehouse reports. A WMS controls what the warehouse does. The gap between the two is where accuracy is lost: stock that exists on the system but cannot be found, picking confirmed before it happened, dispatch documented after the truck has left. Our WMS sits underneath your ERP, feeds it accurate movements, and shows you every message that passed between them.",
+      "faq3.q": "How long does an implementation take?",
+      "faq3.a": "The assessment is a 2 to 4 day on-site study. From there, scope is defined from your data rather than a template, and a signed performance baseline is agreed before anything is built. Most warehouse engagements show measurable results within four to six months, with the solution validated on your floor before full rollout.",
+      "faq4.q": "Our operators are not very technical. Will they use it?",
+      "faq4.a": "That is the design constraint, not an afterthought. Screens follow the physical task, scanning replaces typing wherever possible, and training happens at the Gemba: in real conditions, under real pressure, with your own supervisors leading it. If the floor cannot run it without us standing there, it is not finished.",
+      "faq5.q": "What happens after go-live?",
+      "faq5.a": "We build the review rhythms and audit structures into your team before we step back, and hand over ownership deliberately. We do not exit on a deadline. We exit when the results hold without us.",
+      "final.eyebrow": "Get started",
+      "final.h3": "Ready to see your warehouse running on a system?",
+      "final.sub": "Every day of unreliable stock, slow picking and delayed dispatch is margin leaving the business. Start with a free on-site assessment and a clear view of what it is costing you.",
+      "final.cta": "Book a free warehouse assessment", "final.aboutLabel": "About Gemba",
+      "final.about": "Gemba helps manufacturers build better-performing operations by bringing together industrial expertise, technology and hands-on implementation — from improving processes to deploying warehouse management systems.",
+      "final.tagline": "Consulting-led technological solutions",
+      "fstat.clients": "Clients served", "fstat.team": "Team members",
+      "fstat.sectors": "Sectors covered", "fstat.continents": "Continents",
+      "final.qrCaption": "Scan to talk to our Kenya team",
+      "footer.tagline": "Consulting-led technological solutions for industry.",
+      "footer.linksLabel": "Explore", "footer.l1": "The WMS", "footer.l2": "Industry proof",
+      "footer.l3": "FAQs", "footer.l4": "Book an assessment",
+      "footer.regionsLabel": "Regions we serve", "footer.r1": "Kenya & East Africa",
+      "footer.r2": "India", "footer.r3": "Middle East", "footer.r4": "South East Asia",
+      "footer.contactLabel": "Talk to us", "footer.email": "Email us",
+      "footer.whatsapp": "WhatsApp us", "footer.rights": "Gemba Concepts. All rights reserved."
+    },
+    sw: {
+      "meta.title": "Mfumo wa Usimamizi wa Ghala nchini Kenya | Gemba Concepts",
+      "nav.skip": "Rukia hadi maudhui", "nav.wms": "Mfumo wa WMS", "nav.proof": "Uthibitisho",
+      "nav.faqs": "Maswali", "nav.cta": "Weka miadi ya tathmini", "nav.langLabel": "Lugha",
+      "hero.eyebrow": "Usimamizi wa Ghala · Kenya",
+      "hero.h1": "Mifumo ya Usimamizi wa Ghala, Kenya",
+      "hero.sub": "Bidhaa unazoweza kuziamini, uchukuaji unaoendana na kasi, na usafirishaji unaoondoka kwa wakati. Gemba inaleta utaalamu wa viwanda, mfumo wa usimamizi wa ghala uliothibitishwa, na utekelezaji wa moja kwa moja kwa wazalishaji na wasambazaji kote Kenya.",
+      "hero.cta": "Weka miadi ya tathmini ya bure",
+      "stat.clients": "Wateja waliohudumiwa", "stat.years": "Miaka ya utekelezaji",
+      "stat.sectors": "Sekta zilizofikiwa", "stat.accuracy": "Usahihi wa hesabu",
+      "form.heading": "Weka miadi ya tathmini ya bure ya ghala lako",
+      "form.sub": "Tueleze kinachopunguza kasi ya ghala lako. Timu yetu ya Kenya itajibu ndani ya siku moja ya kazi.",
+      "form.website": "Tovuti", "form.name": "Jina kamili", "form.email": "Barua pepe ya kazi",
+      "form.company": "Kampuni", "form.designation": "Cheo", "form.phone": "Nambari ya simu",
+      "form.size": "Ukubwa wa kampuni", "form.message": "Ujumbe / tatizo lako",
+      "form.sizePlaceholder": "Chagua ukubwa wa kampuni",
+      "form.size1": "Wafanyakazi 1–50", "form.size2": "Wafanyakazi 51–200",
+      "form.size3": "Wafanyakazi 201–500", "form.size4": "Wafanyakazi 501–1,000",
+      "form.size5": "Wafanyakazi 1,000+",
+      "form.submit": "Pata ushauri wa bure wa ghala", "form.submitting": "Inatuma…",
+      "form.success": "Asante. Ombi lako limefika kwa timu yetu ya Kenya, na tutawasiliana nawe ndani ya siku moja ya kazi.",
+      "form.error": "Hitilafu imetokea. Tafadhali jaribu tena, au tutumie barua pepe moja kwa moja.",
+      "form.required": "Inahitajika", "form.invalidEmail": "Weka anwani sahihi ya barua pepe ya kazi",
+      "form.privacy": "Tunatumia taarifa zako kujibu ombi hili pekee.",
+      "ph.image": "Picha", "ph.supplied": "Itatolewa",
+      "wms.eyebrow": "Mfumo wa Gemba WMS",
+      "wms.h2": "WMS inayoongozwa na ushauri, iliyojengwa kwa jinsi maghala ya Kenya yanavyofanya kazi.",
+      "wms.sub": "Mifumo mingi ya ghala hushindwa kwa sababu programu huwasili kabla mchakato haujawa tayari. Sisi hutembelea sakafu kwanza, turekebishe kilichoharibika kweli, kisha tusimike mfumo ambao timu yako inaweza kuuendesha kuanzia siku ya kwanza — na tunabaki hadi matokeo yadumu.",
+      "wms.cta": "Pata ufikiaji wa WMS",
+      "usp1.title": "Imejengwa sakafuni, si katika chumba cha maonyesho",
+      "usp1.body": "Kila moduli inafuata mtiririko halisi wa ghala: kuingia getini, kupakua kwa ASN, ukaguzi wa ubora, kuhifadhi rafuni, kujaza upya, kuchukua, kusafirisha na marejesho. Timu yako inatambua skrini kwa sababu zinalingana na kazi halisi.",
+      "usp2.title": "Hesabu za bidhaa unazoweza kuziamini hatimaye",
+      "usp2.body": "Kila paleti, rafu, batch na daraja hufuatiliwa hadi mahali kamili, huku mahesabu ya mzunguko na ukaguzi wa bidhaa vikijengwa ndani ya ratiba ya kila siku badala ya kuongezwa mwisho wa mwaka.",
+      "usp3.title": "Inafanya kazi kwenye vifaa ambavyo timu yako tayari inabeba",
+      "usp3.body": "Skana imara, vifaa vya mkononi, au simu yoyote ya Android. Waendeshaji wanaendelea kufanya kazi hata wakati wa kukatika kwa umeme na mtandao, na sakafu husawazisha mara tu muunganisho unaporudi.",
+      "usp4.title": "Imetengenezwa kwa jinsi bidhaa zinavyosafiri hapa",
+      "usp4.body": "Uhamishaji kati ya maghala na matawi, ufuatiliaji wa batch na tarehe ya mwisho wa matumizi, msogeo wa daraja na msimbo, na rekodi kamili ya nyaraka kwa ukaguzi na mizigo inayovuka mipaka.",
+      "usp5.title": "Inaunganishwa na ERP unayotumia tayari",
+      "usp5.body": "Oda za ununuzi na ASN kuingia, utoaji wa bidhaa na ankara kutoka, pamoja na kifuatiliaji kinachoonyesha kila ujumbe uliopita au uliofeli — hakuna mapengo ya kimya kati ya sakafu na idara ya fedha.",
+      "proof.eyebrow": "Uthibitisho wa sekta", "proof.h2": "Waendeshaji ambao tayari wamefanya hivi.",
+      "proof.sub": "Wazalishaji, wasindikaji na wasambazaji kote Kenya, Afrika Mashariki na mabara matatu wametuleta kurekebisha kilichokuwa hakifanyi kazi, na wakatuweka kwa tatizo linalofuata.",
+      "proof.clientsLabel": "Wanaotuamini", "proof.caseStudiesLabel": "Tafiti za matukio",
+      "proof.footnote": "Tunaaminiwa katika sekta 40+ nchini Kenya, Afrika Mashariki, India, Mashariki ya Kati na Asia ya Kusini-Mashariki.",
+      "c1.sector": "Usindikaji wa Chakula na Viungo", "c1.country": "Kenya",
+      "c2.sector": "Utengenezaji wa Plastiki", "c2.country": "Kenya",
+      "c3.sector": "Ufungashaji", "c3.country": "Afrika",
+      "c4.sector": "Rejareja na Msururu wa Ugavi", "c4.country": "India",
+      "c5.sector": "Mafuta na Magari", "c5.country": "India",
+      "c6.sector": "Utengenezaji wa Dawa", "c6.country": "India",
+      "c7.sector": "Utengenezaji wa Chuma na Mabomba", "c7.country": "India",
+      "c8.sector": "Polystyrene na Ufungashaji", "c8.country": "UAE",
+      "case1.label": "Tafiti ya tukio · Soma", "case1.title": "Tafiti ya Tukio — Chaguo la Kusoma",
+      "case1.note": "Tafiti ya tukio itatolewa",
+      "case2.label": "Tafiti ya tukio · Tazama", "case2.title": "Tafiti ya Tukio — Chaguo la Video",
+      "case2.note": "Video ya tafiti ya tukio itatolewa",
+      "faqs.eyebrow": "Maswali", "faqs.h2": "Maswali Yanayoulizwa Mara kwa Mara",
+      "faq1.q": "Je, mnafanya kazi Kenya kweli, au ni kutoka India pekee?",
+      "faq1.a": "Tunafanya kazi sakafuni hapa Kenya. Wateja wetu hapa ni pamoja na Spice World Limited na Dentex Industries Limited, na tumeendesha miradi kote Afrika Mashariki na soko pana la Afrika. Utekelezaji unafanyika na timu yako papo hapo: tathmini, usimikaji na mafunzo yote hufanyika ndani ya ghala lako, si kwa barua pepe.",
+      "faq2.q": "Tayari tuna ERP. Je, tunahitaji kweli WMS ya ziada?",
+      "faq2.a": "ERP inarekodi kile ghala linachoripoti. WMS inadhibiti kile ghala linachofanya. Pengo kati ya hizo mbili ndipo usahihi unapopotea: bidhaa zilizopo kwenye mfumo lakini haziwezi kupatikana, uchukuaji uliothibitishwa kabla haujafanyika, usafirishaji ulioandikwa baada ya lori kuondoka. WMS yetu inakaa chini ya ERP yako, inailisha msogeo sahihi, na inakuonyesha kila ujumbe uliopita kati yao.",
+      "faq3.q": "Usimikaji unachukua muda gani?",
+      "faq3.a": "Tathmini ni utafiti wa siku 2 hadi 4 papo hapo. Kutoka hapo, upeo hufafanuliwa kutoka kwa data yako badala ya kiolezo, na msingi wa utendaji uliosainiwa hukubaliwa kabla ya kujenga chochote. Miradi mingi ya ghala huonyesha matokeo yanayopimika ndani ya miezi minne hadi sita, huku suluhisho likithibitishwa sakafuni kwako kabla ya usimikaji kamili.",
+      "faq4.q": "Waendeshaji wetu si wataalamu wa teknolojia. Je, wataitumia?",
+      "faq4.a": "Hilo ndilo sharti la muundo, si jambo la baadaye. Skrini zinafuata kazi halisi, kuchanganua kunachukua nafasi ya kuandika pale inapowezekana, na mafunzo hufanyika Gemba: katika hali halisi, chini ya shinikizo halisi, yakiongozwa na wasimamizi wako mwenyewe. Kama sakafu haiwezi kuiendesha bila sisi kusimama hapo, bado haijakamilika.",
+      "faq5.q": "Nini hutokea baada ya kuanza kutumika?",
+      "faq5.a": "Tunajenga ratiba za mapitio na miundo ya ukaguzi ndani ya timu yako kabla ya kurudi nyuma, na tunakabidhi umiliki kwa makusudi. Hatuondoki kwa sababu ya tarehe ya mwisho. Tunaondoka pale matokeo yanapodumu bila sisi.",
+      "final.eyebrow": "Anza",
+      "final.h3": "Uko tayari kuona ghala lako likiendeshwa kwa mfumo?",
+      "final.sub": "Kila siku ya bidhaa zisizoaminika, uchukuaji wa polepole na usafirishaji uliochelewa ni faida inayotoka kwenye biashara. Anza na tathmini ya bure ya sakafuni na mwonekano wazi wa gharama yake.",
+      "final.cta": "Weka miadi ya tathmini ya bure", "final.aboutLabel": "Kuhusu Gemba",
+      "final.about": "Gemba husaidia wazalishaji kujenga shughuli zenye utendaji bora kwa kuunganisha utaalamu wa viwanda, teknolojia na utekelezaji wa moja kwa moja — kutoka kuboresha michakato hadi kusimika mifumo ya usimamizi wa ghala.",
+      "final.tagline": "Suluhisho za kiteknolojia zinazoongozwa na ushauri",
+      "fstat.clients": "Wateja waliohudumiwa", "fstat.team": "Wanachama wa timu",
+      "fstat.sectors": "Sekta zilizofikiwa", "fstat.continents": "Mabara",
+      "final.qrCaption": "Changanua ili kuzungumza na timu yetu ya Kenya",
+      "footer.tagline": "Suluhisho za kiteknolojia zinazoongozwa na ushauri kwa viwanda.",
+      "footer.linksLabel": "Chunguza", "footer.l1": "Mfumo wa WMS", "footer.l2": "Uthibitisho wa sekta",
+      "footer.l3": "Maswali", "footer.l4": "Weka miadi ya tathmini",
+      "footer.regionsLabel": "Maeneo tunayohudumia", "footer.r1": "Kenya na Afrika Mashariki",
+      "footer.r2": "India", "footer.r3": "Mashariki ya Kati", "footer.r4": "Asia ya Kusini-Mashariki",
+      "footer.contactLabel": "Zungumza nasi", "footer.email": "Tutumie barua pepe",
+      "footer.whatsapp": "Tutumie WhatsApp", "footer.rights": "Gemba Concepts. Haki zote zimehifadhiwa."
+    }
+  };
+
+  var STORAGE_KEY = "gemba-kenya-lang";
+  var lang = "en";
+
+  function t(key) {
+    var dict = COPY[lang] || COPY.en;
+    return dict[key] !== undefined ? dict[key] : COPY.en[key];
+  }
+
+  function applyLang(next) {
+    lang = COPY[next] ? next : "en";
+    document.documentElement.lang = lang;
+    document.title = t("meta.title");
+
+    var nodes = document.querySelectorAll("[data-i18n]");
+    for (var i = 0; i < nodes.length; i++) {
+      var value = t(nodes[i].getAttribute("data-i18n"));
+      if (value !== undefined) nodes[i].textContent = value;
+    }
+
+    var labelled = document.querySelectorAll("[data-i18n-aria]");
+    for (var j = 0; j < labelled.length; j++) {
+      labelled[j].setAttribute("aria-label", t(labelled[j].getAttribute("data-i18n-aria")));
+    }
+
+    var buttons = document.querySelectorAll(".lang-btn");
+    for (var k = 0; k < buttons.length; k++) {
+      buttons[k].setAttribute("aria-pressed", String(buttons[k].getAttribute("data-lang") === lang));
+    }
+
+    try { window.localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* storage blocked */ }
+  }
+
+  try {
+    var stored = window.localStorage.getItem(STORAGE_KEY);
+    if (stored === "en" || stored === "sw") applyLang(stored);
+  } catch (e) { /* storage blocked - English is a fine default */ }
+
+  document.addEventListener("click", function (event) {
+    var button = event.target.closest ? event.target.closest(".lang-btn") : null;
+    if (button) applyLang(button.getAttribute("data-lang"));
+  });
+
+  /* ---------------- reveal on scroll ----------------
+     One shared, throttled listener rather than an observer per element:
+     a fast or programmatic scroll can carry an element past the viewport
+     without an IntersectionObserver ever firing, which would leave the
+     copy stuck at opacity 0. */
+  var pending = [];
+  var timer = null;
+
+  function flush() {
+    timer = null;
+    var limit = window.innerHeight * 0.92;
+    for (var i = pending.length - 1; i >= 0; i--) {
+      if (pending[i].getBoundingClientRect().top < limit) {
+        pending[i].setAttribute("data-shown", "true");
+        pending.splice(i, 1);
+      }
+    }
+    if (pending.length === 0) {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    }
+  }
+
+  function schedule() {
+    if (timer === null) timer = window.setTimeout(flush, 80);
+  }
+
+  var reveals = document.querySelectorAll(".reveal");
+  for (var r = 0; r < reveals.length; r++) {
+    reveals[r].style.transitionDelay = (reveals[r].getAttribute("data-delay") || 0) + "ms";
+    pending.push(reveals[r]);
+  }
+  window.addEventListener("scroll", schedule, { passive: true });
+  window.addEventListener("resize", schedule, { passive: true });
+  flush();
+
+  /* ---------------- sticky header shadow ---------------- */
+  var header = document.querySelector(".site-header");
+  function onScroll() { header.setAttribute("data-lifted", String(window.scrollY > 8)); }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* ---------------- mobile menu ---------------- */
+  var burger = document.getElementById("burger");
+  var mobileNav = document.getElementById("mobile-nav");
+
+  burger.addEventListener("click", function () {
+    var open = burger.getAttribute("aria-expanded") === "true";
+    burger.setAttribute("aria-expanded", String(!open));
+    burger.innerHTML = open ? "&#9776;" : "&#215;";
+    mobileNav.hidden = open;
+  });
+
+  mobileNav.addEventListener("click", function (event) {
+    if (event.target.tagName === "A") {
+      burger.setAttribute("aria-expanded", "false");
+      burger.innerHTML = "&#9776;";
+      mobileNav.hidden = true;
+    }
+  });
+
+  /* ---------------- FAQ accordion ---------------- */
+  var faqButtons = document.querySelectorAll(".faq-btn");
+  for (var f = 0; f < faqButtons.length; f++) {
+    faqButtons[f].addEventListener("click", function () {
+      var wasOpen = this.getAttribute("aria-expanded") === "true";
+      for (var g = 0; g < faqButtons.length; g++) {
+        faqButtons[g].setAttribute("aria-expanded", "false");
+        document.getElementById(faqButtons[g].getAttribute("aria-controls")).hidden = true;
+      }
+      if (!wasOpen) {
+        this.setAttribute("aria-expanded", "true");
+        document.getElementById(this.getAttribute("aria-controls")).hidden = false;
+      }
+    });
+  }
+
+  /* ---------------- contact form ---------------- */
+  var form = document.getElementById("contact-form");
+  var successBox = document.getElementById("form-success");
+  var submitBtn = document.getElementById("submit-btn");
+  var formError = document.getElementById("form-error");
+  var EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  function showError(name, message) {
+    var slot = form.querySelector('[data-err="' + name + '"]');
+    var field = form.elements[name];
+    if (message) {
+      slot.textContent = message;
+      slot.hidden = false;
+      field.setAttribute("aria-invalid", "true");
+    } else {
+      slot.hidden = true;
+      field.removeAttribute("aria-invalid");
+    }
+  }
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    formError.hidden = true;
+
+    var value = function (name) { return String(form.elements[name].value || "").trim(); };
+    var email = value("email");
+    var ok = true;
+
+    var required = ["name", "company", "phone"];
+    for (var i = 0; i < required.length; i++) {
+      var missing = !value(required[i]);
+      showError(required[i], missing ? t("form.required") : "");
+      if (missing) ok = false;
+    }
+
+    if (!email) { showError("email", t("form.required")); ok = false; }
+    else if (!EMAIL.test(email)) { showError("email", t("form.invalidEmail")); ok = false; }
+    else { showError("email", ""); }
+
+    if (!ok) return;
+
+    var payload = {
+      website: value("website"),
+      name: value("name"),
+      email: email,
+      company: value("company"),
+      designation: value("designation"),
+      phone: "+254 " + value("phone"),
+      companySize: value("companySize"),
+      message: value("message")
+    };
+
+    function succeed() {
+      form.hidden = true;
+      successBox.hidden = false;
+    }
+
+    if (!FORM_ENDPOINT) {
+      /* No destination configured - nothing is sent. */
+      console.info("[contact] no FORM_ENDPOINT set; enquiry not sent", payload);
+      succeed();
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = t("form.submitting");
+
+    fetch(FORM_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }).then(function (response) {
+      if (!response.ok) throw new Error("Request failed: " + response.status);
+      succeed();
+    }).catch(function () {
+      formError.textContent = t("form.error");
+      formError.hidden = false;
+      submitBtn.disabled = false;
+      submitBtn.textContent = t("form.submit");
+    });
+  });
+})();
+</script>
+</body>
+</html>
